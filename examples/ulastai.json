@@ -1,0 +1,13 @@
+{
+        "comment": "This is an example of configuration file for",
+        "comment": "Ulastai, China, where the TREND and 21CMA experiments",
+        "comment": "are located.",
+
+        "topography" : {
+                "latitude" : 42.928056,
+                "longitude" : 86.741667,
+                "path" : "shared/topography",
+                "size" : 100E+03,
+                "resolution" : 201,
+                "texture" : "sand" }
+}
