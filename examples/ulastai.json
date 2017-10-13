@@ -6,8 +6,12 @@
         "topography" : {
                 "latitude" : 42.928056,
                 "longitude" : 86.741667,
-                "path" : "shared/topography",
+                "path" : "share/topography",
                 "size" : 100E+03,
                 "resolution" : 201,
-                "texture" : "sand" }
+                "texture" : "sand" },
+
+        "events": {
+                "path" : "events.json",
+                "on_start" : [ "toggle_all_decays" ] }
 }
