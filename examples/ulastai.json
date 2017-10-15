@@ -12,6 +12,6 @@
                 "texture" : "sand" },
 
         "events": {
-                "path" : "events.json",
+                "path" : "events-ulastai.json",
                 "on_start" : [ "toggle_all_decays" ] }
 }

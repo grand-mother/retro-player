@@ -1,0 +1,15 @@
+{
+        "comment" : "This is an example card with a flat topography.",
+
+        "topography" : {
+                "latitude" : 43,
+                "longitude" : 87,
+                "path" : "flat/2",
+                "size" : 100E+03,
+                "resolution" : 201,
+                "texture" : "grass" },
+
+        "events": {
+                "path" : "events-flat.json",
+                "on_start" : [ "toggle_all_decays" ] }
+}
