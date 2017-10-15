@@ -1,40 +1,32 @@
-# GRAND player
+# RETRO player
 
-_This is an interactive event display for GRAND._
+_This is a plugin for RETRO providing an interactive event display._
 
 ## Installation
 
 The player is built on the [Panda3D][Panda3D] engine. In order to run it
-you'll need to install the Panda3D SDK, e.g. from [here][Panda3D:SDK]. In
-addition, the player has the following dependencies:
+you'll need to install the Panda3D SDK, e.g. from [here][Panda3D:SDK]. Then,
+from [RETRO][RETRO]'s directory run:
 
-3. [GRAND-TOUR][GRAND-TOUR], Python bindings for TURTLE, encapsulating GRAND's
-   topography.
-2. [PUPPY][PUPPY], an encapsulation of Panda3D providing procedural builders.
-3. [TURTLE][TURTLE], a topography library in C.
-
-If needed, they can be installed locally as submodules via git, running the
-[deps/install.sh](deps/install.sh) script. Then one can source
-[deps/setup.sh](deps/setup.sh) in order to set the environment accordingly.
+```bash
+mkdir -p plugins
+git clone https://github.com/grand-mother/retro-player plugins/player
+make && make plugins
+```
 
 [Panda3D]: https://www.panda3d.org/
 [Panda3D:SDK]: https://www.panda3d.org/download.php?sdk&version=1.9.4
-[TURTLE]: https://github.com/niess/turtle
-[PUPPY]: https://github.com/niess/puppy
-[GRAND-TOUR]: https://github.com/grand/grand-tour
+[RETRO]: https://github.com/grand-mother/retro
 
 ## Documentation
 
 In order to run the player you'll need a configuration card,
-e.g. [example/ulastai.json](example/ulastai.json) as well as the
-[ASTER-GDEM2][ASTER-GDEM2] tiles corresponding to your location. The run :
+e.g. [example/ulastai.json](example/ulastai.json). Then run:
 
 ```bash
-./scripts/player.py examples/ulastai.json
+retro-play plugins/retro-player/examples/ulastai.json
 ```
 
-[ASTER-GDEM2]: https://asterweb.jpl.nasa.gov/gdem.asp
-
 ## License
-The GRAND player is under the **GNU LGPLv3** license. See the provided
-`LICENSE` and `COPYING.LESSER` files.
+The player plugin for RETRO is under the **GNU LGPLv3** license. See the
+provided [LICENSE](LICENSE) and [COPYING.LESSER](COPYING.LESSER) files.

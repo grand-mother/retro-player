@@ -1,9 +1,3 @@
-[submodule "grand-tour"]
-	path = deps/grand-tour
-	url = https://github.com/grand-mother/grand-tour
 [submodule "puppy"]
 	path = deps/puppy
 	url = https://github.com/niess/puppy
-[submodule "turtle"]
-	path = deps/turtle
-	url = https://github.com/niess/turtle

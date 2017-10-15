@@ -4,7 +4,7 @@
 #  Copyright (C) 2017 Université Clermont Auvergne, CNRS/IN2P3, LPC
 #  Author: Valentin NIESS (niess@in2p3.fr)
 #
-#  GRAND player, an interactive event display for GRAND.
+#  RETRO player, an interactive event display for RETRO.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,7 @@
 
 import collections
 import json
+import os
 import sys
 import time
 # Pand3D modules.
@@ -31,6 +32,12 @@ import numpy
 import puppy.build
 import puppy.control
 import puppy.texture
+
+# Directory where the player is located.
+PLAYER_DIR = os.path.abspath(
+  os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    ".."))
 
 class EventIterator:
     """Iterator over GRAND events stored in a JSON file."""
@@ -150,7 +157,7 @@ def Paint():
         try:
             return textures[name]
         except KeyError:
-            path = "share/textures/{:}.jpg".format(name)
+            path = "{:}/share/textures/{:}.jpg".format(PLAYER_DIR, name)
             t = puppy.texture.load(path)
             textures[name] = t
             return t
@@ -223,7 +230,8 @@ class Player(puppy.control.KeyboardCamera, EventManager):
             self.camera.setPos(0., 0., topo.ground_altitude(0., 0.) + 1.7)
 
         # Add a background image.
-        OnscreenImage(parent=render2d, image="share/textures/stars.jpg")
+        OnscreenImage(parent=render2d,
+          image="{:}/share/textures/stars.jpg".format(PLAYER_DIR))
         base.cam.node().getDisplayRegion(0).setSort(20)
 
 if __name__ == "__main__":
