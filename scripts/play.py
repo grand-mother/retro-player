@@ -28,6 +28,7 @@ import time
 from direct.gui.OnscreenImage import OnscreenImage
 # Extra modules.
 from grand_tour import Topography
+from retro.event import EventIterator
 import numpy
 import puppy.build
 import puppy.control
@@ -38,43 +39,6 @@ PLAYER_DIR = os.path.abspath(
   os.path.join(
     os.path.dirname(os.path.realpath(__file__)),
     ".."))
-
-class EventIterator:
-    """Iterator over GRAND events stored in a JSON file."""
-    def __init__(self, path):
-        f = open(path)
-        self._file = f
-        self._prev = -1
-        self._current = None
-
-    def __del__(self):
-        if self._file:
-            self._file.close()
-            self._file = None
-
-    def __iter__(self):
-        self.rewind()
-        return self
-
-    def next(self):
-        """Pop the next event from file."""
-        try: event = json.loads(self._file.readline())
-        except ValueError: raise StopIteration()
-        self._prev = event["previous"]
-        self._current = event
-        return event
-
-    def previous(self):
-        """Pop the previous event from file."""
-        if self._prev >= 0: self._file.seek(self._prev, 0)
-        else: self._file.seek(0, 0)
-        return self.next()
-
-    def rewind(self):
-        """Rewind the file."""
-        self._file.seek(0, 0)
-        self._prev = -1
-        self._current = None
 
 class EventManager(object):
     """Manage GRAND events."""

@@ -6,7 +6,6 @@ all: ../../lib/python/puppy ../../bin/retro-play
 
 ../../lib/python/puppy:
 	@git submodule update --init
-	@mkdir -p ../../lib/python
 	@cd ../../lib/python && ln -s ../../plugins/$(PLAYER_DIRNAME)/deps/puppy/lib/puppy puppy
 
 ../../bin/retro-play:
