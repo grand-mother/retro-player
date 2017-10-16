@@ -47,16 +47,19 @@ class EventManager(object):
         if path: self.events = EventIterator(path)
         self._current_vertex = None
         self._all_vertices = collections.deque([])
-        if on_start:
-            for process in on_start:
-                try: method, kwargs = process
-                except ValueError: method, kwargs = process, {}
-                getattr(self, method)(**kwargs)
+        self._on_start = on_start
 
         # Register the extra event handlers.
         self.accept("raw-e", self.show_next_event)
         self.accept("raw-q", self.show_previous_event)
         self.accept("raw-t", self.toggle_all_decays)
+
+    def do_start(self):
+        if self._on_start:
+            for process in self._on_start:
+                try: method, kwargs = process
+                except ValueError: method, kwargs = process, {}
+                getattr(self, method)(**kwargs)
 
     def toggle_all_decays(self):
         """Toggle the display of all the tau decay vertices."""
@@ -76,7 +79,7 @@ class EventManager(object):
     def show_next_event(self):
         """Render the next event and relocate to it."""
         try: event = self.events.next()
-        except StopIteration: event = self.events.current
+        except StopIteration: event = self.events._current
         self._update_event(event)
 
     def show_previous_event(self):
@@ -86,12 +89,14 @@ class EventManager(object):
 
     def _render_decay(self, event):
         """Render a decay."""
-        energy, position, direction, _, _  = event["tau_at_decay"]
+        energy, position, direction = event["tau_at_decay"]
         size = numpy.log10(energy)
         vertex = puppy.build.Box(
           size, face_color=(1,1,0,1), line_color=(0,0,0,1)).render()
         vertex.setPos(*position)
-        edges = (position, position - 100. * numpy.array(direction))
+        ub = - numpy.array(direction)
+        distance = _topography.distance(position, ub)
+        edges = (position, position + distance * ub)
         track = puppy.build.Track(edges, line_color=(1,1,0,1)).render()
         vertex.reparentTo(track)
         return track
@@ -166,6 +171,8 @@ class Player(puppy.control.KeyboardCamera, EventManager):
             del topography["size"]
 
             topo = Topography(**topography)
+            global _topography
+            _topography = topo
 
             # Interpolate the topography on a mesh.
             t0 = time.time()
@@ -197,6 +204,9 @@ class Player(puppy.control.KeyboardCamera, EventManager):
         OnscreenImage(parent=render2d,
           image="{:}/share/textures/stars.jpg".format(PLAYER_DIR))
         base.cam.node().getDisplayRegion(0).setSort(20)
+
+        # Process any startup command.
+        self.do_start()
 
 if __name__ == "__main__":
     try: config_path = sys.argv[1]
