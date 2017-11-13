@@ -24,7 +24,7 @@ In order to run the player you'll need a configuration card,
 e.g. [example/ulastai.json](example/ulastai.json). Then run:
 
 ```bash
-retro-play plugins/retro-player/examples/ulastai.json
+retro-play plugins/player/examples/ulastai.json
 ```
 
 ## License
