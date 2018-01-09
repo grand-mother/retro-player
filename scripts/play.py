@@ -89,13 +89,15 @@ class EventManager(object):
 
     def _render_decay(self, event):
         """Render a decay."""
-        energy, position, direction = event["tau_at_decay"]
+        energy, position, direction, _ = event["tau_at_decay"]
         size = numpy.log10(energy)
         vertex = puppy.build.Box(
           size, face_color=(1,1,0,1), line_color=(0,0,0,1)).render()
         vertex.setPos(*position)
         ub = - numpy.array(direction)
         distance = _topography.distance(position, ub)
+        if distance is None:
+            distance = 1E+04
         edges = (position, position + distance * ub)
         track = puppy.build.Track(edges, line_color=(1,1,0,1)).render()
         vertex.reparentTo(track)
